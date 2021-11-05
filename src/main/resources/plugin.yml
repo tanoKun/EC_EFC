@@ -1,0 +1,5 @@
+name: EC_EFC
+version: ${project.version}
+main: com.github.tanokun.ec_efc.EC_EFC
+api-version: 1.16
+authors: [ tanokun ]
