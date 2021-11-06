@@ -1,5 +1,5 @@
-name: EC_EFC
+name: TaktiePlugin
 version: ${project.version}
-main: com.github.tanokun.ec_efc.EC_EFC
+main: com.github.tanokun.ec_efc.TaktiePlugin
 api-version: 1.16
 authors: [ tanokun ]
