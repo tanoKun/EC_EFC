@@ -39,7 +39,7 @@ public class CommandManager {
                         e.printStackTrace();
                     }
                     commands.put(tabComplete.parentName(), commandEntity);
-                    server.getCommandMap().register("ec", commandEntity);
+                    server.getCommandMap().register("takite", commandEntity);
                 }
                 commands.get(tabComplete.parentName()).registerTabComplete(tabComplete.name(), method);
                 continue;
@@ -52,7 +52,7 @@ public class CommandManager {
                 } catch (InstantiationException e) {e.printStackTrace();
                 } catch (IllegalAccessException e) {e.printStackTrace();}
 
-                server.getCommandMap().register("ec", commandEntity);
+                server.getCommandMap().register("takite", commandEntity);
                 commands.put(command.parentName(), commandEntity);
                 commandEntity.registerSubCommand(command.name(), method);
             }
@@ -104,6 +104,15 @@ public class CommandManager {
             CommandContext commandContext = new CommandContext(sender, args);
             String sub = commandContext.getArg(0, "");
 
+            if (subs.size() == 1) {
+                ArrayList<String> test = new ArrayList<>(Arrays.asList(args));
+                try {
+                    subs.get("").invoke(object, sender, new CommandContext(test.toArray(new String[test.size()])));
+                } catch (IllegalAccessException e) { e.printStackTrace(); }
+                catch (InvocationTargetException exception) { exception.printStackTrace();}
+                return true;
+            }
+
             if (!subs.containsKey(sub)) {sender.sendMessage("§cその引数は存在しません (" + sub + ")"); return true;}
 
             if (subs.get(sub).getAnnotation(CommandPermission.class) != null){
@@ -116,9 +125,7 @@ public class CommandManager {
 
             try {
                 ArrayList<String> test = new ArrayList<>(Arrays.asList(args));
-                if (!sub.contains("") || subs.size() != 1) {
-                    test.remove(0);
-                }
+                test.remove(0);
                 subs.get(sub).invoke(object, sender, new CommandContext(test.toArray(new String[test.size()])));
             } catch (IllegalAccessException e) { e.printStackTrace(); }
             catch (InvocationTargetException exception) { exception.printStackTrace();}
